@@ -18,148 +18,127 @@ function mostrar()
   var tipoIngresado;
   var bolsasIngresadas;
   var precioIngresado;
-  var sumaTotalPrecio;
   var sumaTotalBolsas;
-  var precioSinDescuento;
   var descuento;
-  var precioFinal; 
+  var sumaTotalPrecio;
+  var precioSinDescuento;
+  var precioFinal;
+  var totalBolsasCafe;
   var totalBolsasYerba;
   var totalBolsasAzucar;
-  var totalBolsasCafe;
-  var totalPrecioYerba;
-  var totalPrecioAzucar;
-  var totalPrecioCafe;
-
+  var banderaPuntoD;
+  var compraMasBarata;
+  var tipoMasBarato;
   respuesta = true;
-  sumaTotalPrecio = 0;
   sumaTotalBolsas = 0;
-  totalBolsasCafe = 0;
+  sumaTotalPrecio = 0;
   totalBolsasAzucar = 0;
+  totalBolsasCafe = 0;
   totalBolsasYerba = 0;
-  totalPrecioCafe = 0;
-  totalPrecioAzucar = 0;
-  totalPrecioYerba = 0;
+  banderaPuntoD = true;
 
   while(respuesta == true) 
   {
-    tipoIngresado = prompt("Ingresar tipo:");
-    tipoIngresado = tipoIngresado.toUpperCase();
-    while(tipoIngresado != "YERBA" && tipoIngresado != "AZUCAR" && tipoIngresado != "CAFE") 
-    {
-      tipoIngresado = prompt("Yerba, azucar o cafe");
+   
+   tipoIngresado = prompt("Ingresar tipo:");
+   tipoIngresado = tipoIngresado.toUpperCase();
+   while(tipoIngresado != "YERBA" && tipoIngresado != "AZUCAR" && tipoIngresado != "CAFE") 
+   {
+      tipoIngresado = prompt("Ingresar tipo:");
       tipoIngresado = tipoIngresado.toUpperCase();
-    }
-
-    bolsasIngresadas = prompt("Ingresar bolsas:");
-    bolsasIngresadas = parseInt(bolsasIngresadas);
-    while(isNaN(bolsasIngresadas) || bolsasIngresadas < 1) 
-    {
-      bolsasIngresadas = prompt("Mayor que cero");
+   }
+   
+   bolsasIngresadas = prompt("Ingresar bolsas:");
+   bolsasIngresadas = parseInt(bolsasIngresadas);
+   while(isNaN(bolsasIngresadas) || bolsasIngresadas < 1) 
+   {
+      bolsasIngresadas = prompt("Ingresar bolsas:");
       bolsasIngresadas = parseInt(bolsasIngresadas);
-    }
+   }
+   
+   precioIngresado = prompt("Ingresar precio:");
+   precioIngresado = parseInt(precioIngresado); 
+   while(isNaN(precioIngresado) || precioIngresado < 1) 
+   {
+      precioIngresado = prompt("Ingresar precio:");
+      precioIngresado = parseInt(precioIngresado); 
+   }
 
-    precioIngresado = prompt("Ingresar precio:");
-    precioIngresado = parseInt(precioIngresado);
-    while(isNaN(precioIngresado) || precioIngresado < 1) 
-    {
-      precioIngresado = prompt("Mayor que cero");
-      precioIngresado = parseInt(precioIngresado);
-    } // Fin validacion
-
-    if(tipoIngresado == "YERBA") 
-    {
+   sumaTotalBolsas += bolsasIngresadas;
+   sumaTotalPrecio += bolsasIngresadas * precioIngresado;
+   
+   if(tipoIngresado == "YERBA") 
+   {
       totalBolsasYerba += bolsasIngresadas;
-      totalPrecioYerba += precioIngresado * bolsasIngresadas;
-    }
-    else 
-    {
-      if(tipoIngresado == "AZUCAR") 
+   }
+   else 
+   {
+      if(tipoIngresado == "CAFE") 
       {
-        totalBolsasAzucar += bolsasIngresadas;
-        totalPrecioAzucar += precioIngresado * bolsasIngresadas;
+         totalBolsasCafe += bolsasIngresadas;
       }
       else 
       {
-        totalBolsasCafe += bolsasIngresadas;
-        totalPrecioCafe += precioIngresado * bolsasIngresadas;
+         totalBolsasAzucar += bolsasIngresadas;
       }
-    }
+   }
 
-    sumaTotalPrecio += precioIngresado * bolsasIngresadas;
-    sumaTotalBolsas += bolsasIngresadas;
+   if(banderaPuntoD == true || precioIngresado * bolsasIngresadas < compraMasBarata) 
+   {
+      compraMasBarata = precioIngresado * bolsasIngresadas;
+      tipoMasBarato = tipoIngresado;
+      banderaPuntoD = false;
+   }
+   console.log(compraMasBarata + "/" + tipoMasBarato);
 
-    respuesta = confirm("Continuar?");
-  }
+   respuesta = confirm("Continuar?");
+}
 
-  precioSinDescuento = sumaTotalPrecio;
-  
-  if(sumaTotalBolsas > 10) 
-  {
-    descuento = precioSinDescuento * (15/100);
-    precioFinal = precioSinDescuento - descuento;
-  }
-  else 
-  {
-    if(sumaTotalBolsas > 5) 
-    {
-      descuento = precioSinDescuento * (10/100);
+precioSinDescuento = sumaTotalPrecio;
+
+if(sumaTotalBolsas > 10) 
+{
+   descuento = precioSinDescuento * 15/100;
+   precioFinal = precioSinDescuento - descuento;
+}
+else 
+{
+   if(sumaTotalBolsas > 5 && sumaTotalBolsas < 11) 
+   {
+      descuento = precioSinDescuento * 10/100;
       precioFinal = precioSinDescuento - descuento;
-    }
-    else 
-    {
+   }
+   else 
+   {
       descuento = 0;
       precioFinal = precioSinDescuento;
-    }
-  }
+   }
+}
 
-  //punto a
-  alert("Importe a pagar sin descuentos: $" + precioSinDescuento);
+alert("Precio sin descuento: $" + precioSinDescuento);
+if(descuento != 0) 
+{
+   alert("Precio con descuento: $" + precioFinal);
+}
 
-  //punto b
-  if(descuento != 0) 
-  {
-    alert("Importe a pagar con descuento: $" + precioFinal);
-  }
-
-  //punto c
-  if(totalBolsasYerba > totalBolsasCafe && totalBolsasYerba > totalBolsasAzucar) 
-  {
-    alert("Tipo con mas bolsas: Yerba(" + totalBolsasYerba + ")");
-  }
-  else 
-  {
-    if(totalBolsasAzucar > totalBolsasCafe && totalBolsasAzucar > totalBolsasYerba) 
-    {
-      alert("Tipo con mas bolsas: Azucar(" + totalBolsasAzucar + ")");
-    }
-    else 
-    {
-      if(totalBolsasCafe > totalBolsasAzucar && totalBolsasCafe > totalBolsasYerba) 
+if(totalBolsasCafe > totalBolsasYerba && totalBolsasCafe > totalBolsasAzucar) 
+{
+   alert("Mas bolsas: Cafe (" + totalBolsasCafe + ")");
+}
+else 
+{
+   if(totalBolsasYerba > totalBolsasCafe && totalBolsasYerba > totalBolsasAzucar) 
+   {
+      alert("Mas bolsas: Yerba (" + totalBolsasYerba + ")");
+   }
+   else 
+   {
+      if(totalBolsasAzucar > totalBolsasCafe && totalBolsasAzucar > totalBolsasYerba) 
       {
-        alert("Tipo con mas bolsas: Cafe(" + totalBolsasCafe + ")");
+         alert("Mas bolsas: Azucar (" + totalBolsasAzucar +")");
       }
-    }
-  }
+   }
+}
 
-  //punto d 
-  if(totalPrecioYerba < totalPrecioAzucar && totalPrecioYerba < totalPrecioCafe)
-  {
-    alert("Tipo mas barato: Yerba ($" + totalPrecioYerba + ")");
-  }
-  else 
-  {
-    if(totalPrecioAzucar < totalPrecioYerba && totalPrecioAzucar < totalPrecioCafe) 
-    {
-      alert("Tipo mas barato: Azucar ($" + totalPrecioAzucar + ")");
-    }
-    else 
-    {
-      if(totalPrecioCafe < totalPrecioYerba && totalPrecioCafe < totalPrecioAzucar) 
-      {
-        alert("Tipo mas barato: Cafe ($" + totalPrecioCafe + ")");
-      }
-    }
-  }
-
-
+alert("Tipo compra mas barata: " + tipoMasBarato + "($" + compraMasBarata + ")");
 }

@@ -16,95 +16,97 @@ c) Cuántas unidades de HDD hay en total.*/
 
 function mostrar()
 {
-	var contador;
-	var tipoIngresado;
-	var precioIngresado;
-	var cantidadUnidades;
-	var marcaIngresada;
-	var capacidadIngresada;
-	var ssdMasBarato;
-	var ssdUnidades;
-	var ssdMarca;
-	var banderaSSD;
-	var banderaHDD;
-	var hddCaro;
-	var hddCapacidad;
-	var hddUnidades;
-	var totalUnidadesHDD;
+var contador;
+var tipoIngresado;
+var precioIngresado;
+var cantidadUnidades;
+var marcaIngresada;
+var capacidadIngresada;
+var ssdBarato;
+var banderaSSD;
+var ssdUnidades;
+var ssdMarca;
+var banderaHDD;
+var hddCaro;
+var hddCapacidad;
+var hddUnidades;
+var contadorUnidadesHDD;
 
+contador = 0;
+banderaSSD = true;
+banderaHDD = true;
+contadorUnidadesHDD = 0;
 
-	contador = 0;
-	banderaSSD = true;
-	banderaHDD = true;
-	totalUnidadesHDD = 0;
-	
-	while(contador < 5) 
-	{
-		tipoIngresado = prompt("Ingresar tipo: ");
-		tipoIngresado = tipoIngresado.toUpperCase();
-		while(tipoIngresado != "HDD" && tipoIngresado != "SSD" && tipoIngresado != "SSDM2")
-		{
-			tipoIngresado = prompt("HDD, SSD o SSDM2");
-			tipoIngresado = tipoIngresado.toUpperCase();
-		}
-		
-		precioIngresado = prompt("Ingresar precio:");
-		precioIngresado = parseInt(precioIngresado);
-		while(isNaN(precioIngresado) || precioIngresado < 5000 || precioIngresado > 18001) 
-		{
-			precioIngresado = prompt("Entre 5000 y 18000");
-			precioIngresado = parseInt(precioIngresado);
-		}
+while(contador < 5) 
+{
+   tipoIngresado = prompt("Tipo:");
+   tipoIngresado = tipoIngresado.toUpperCase();
+   while(tipoIngresado != "HDD" && tipoIngresado != "SSD" && tipoIngresado != "SSDM2") 
+   {
+      tipoIngresado = prompt("Tipo:");
+      tipoIngresado = tipoIngresado.toUpperCase(); 
+   }
+   precioIngresado = prompt("Precio");
+   precioIngresado = parseInt(precioIngresado);
+   while(isNaN(precioIngresado) || precioIngresado < 5000 || precioIngresado > 18000) 
+   {
+      precioIngresado = prompt("Precio");
+      precioIngresado = parseInt(precioIngresado);
+   }
+   cantidadUnidades = prompt("Unidades:");
+   cantidadUnidades = parseInt(cantidadUnidades);
+   while(isNaN(cantidadUnidades) || cantidadUnidades < 1 || cantidadUnidades > 50) 
+   {
+      cantidadUnidades = prompt("Unidades");
+      cantidadUnidades = parseInt(cantidadUnidades);
+   }
+   marcaIngresada = prompt("Marca");
 
-		cantidadUnidades = prompt("Ingresar cantidad de unidades:");
-		cantidadUnidades = parseInt(cantidadUnidades);
-		while(isNaN(cantidadUnidades) || cantidadUnidades < 1 || cantidadUnidades > 51) 
-		{
-			cantidadUnidades = prompt("Entre 1 y 50");
-			cantidadUnidades = parseInt(cantidadUnidades);
-		}
+   
+   while(marcaIngresada != "Seagate" && marcaIngresada != "Kingston" && marcaIngresada != "Western Digital") 
+   {
+      marcaIngresada = prompt("Marca");
+     
+   }
+   capacidadIngresada = prompt("Capacidad");
+   capacidadIngresada = capacidadIngresada.toUpperCase();
+   while(capacidadIngresada != "250GB" && capacidadIngresada != "500GB" && capacidadIngresada != "1TB" && capacidadIngresada != "2TB") 
+   {
+      capacidadIngresada = prompt("Capacidad");
+      capacidadIngresada = capacidadIngresada.toUpperCase();
+   }//Fin validacion
+  
+   if(tipoIngresado == "SSD") 
+   {
+      if(banderaSSD == true || precioIngresado < ssdBarato) 
+      {
+         ssdBarato = precioIngresado;
+         ssdMarca = marcaIngresada;
+         ssdUnidades = cantidadUnidades;
+         banderaSSD = false;
+      }
+   }
+   else 
+   {
+      if(tipoIngresado == "HDD") 
+      {
+          if(contadorUnidadesHDD == 0 || precioIngresado > hddCaro) 
+          {
+            hddCaro = precioIngresado;
+            hddUnidades = cantidadUnidades;
+            hddCapacidad = capacidadIngresada;
+           
+          }
+          contadorUnidadesHDD += cantidadUnidades;
 
-		marcaIngresada = prompt("Ingresar marca:");
-		while(marcaIngresada != "Seagate" && marcaIngresada != "Western Digital" && marcaIngresada != "Kingston") 
-		{
-			marcaIngresada = prompt("Seagate, Western Digital o Kingston");
-		}
+      }
+   }
 
-		capacidadIngresada = prompt("Ingresar capacidad");
-		while(capacidadIngresada != "250GB" && capacidadIngresada != "500GB" && capacidadIngresada != "1TB" && capacidadIngresada != "2TB") 
-		{
-			capacidadIngresada = prompt("250GB, 500GB, 1TB o 2TB");
-		} //Fin Validacion
+   contador++;
+}
 
-		if(tipoIngresado == "SSD") 
-		{
-			if(banderaSSD == true || precioIngresado < ssdMasBarato) 
-			{
-				ssdMasBarato = precioIngresado;
-				ssdUnidades = cantidadUnidades;
-				ssdMarca = marcaIngresada;
-				banderaSSD = false;
-			}
-		}
-		else 
-		{
-			if(tipoIngresado == "HDD") 
-			{
-				if(banderaHDD == true || precioIngresado > hddCaro) 
-				{
-					hddCaro = precioIngresado;
-					hddUnidades = cantidadUnidades;
-					hddCapacidad = capacidadIngresada;
-					banderaHDD = false;
-				}
-				totalUnidadesHDD += cantidadUnidades;
-			}
-		}
+alert("SSD mas barato: $" + ssdBarato + ". Marca: " + ssdMarca + ". Cantidad de unidades: " + ssdUnidades);
+alert("HDD CARO: $" + hddCaro + ". Capacidad: " + hddCapacidad + ". Unidades: " + hddUnidades);
+alert("Unidades HDD: " + contadorUnidadesHDD);
 
-		contador++;	
-	}
-
-	alert("SSD Mas barato: $" + ssdMasBarato +". Unidades: " + ssdUnidades + ". Marca: " + ssdMarca);
-	alert("HDD Mas caro: $" + hddCaro + ". Unidades: " + hddUnidades + ". Capacidad: " + hddCapacidad);
-	alert("Cantidad de unidades HDD: " + totalUnidadesHDD);
 }
